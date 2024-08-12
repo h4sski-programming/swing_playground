@@ -1,9 +1,12 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class CalculatorInput extends JPanel {
 
     public CalculatorInput() {
+//        this.setLayout(new GridLayout(4,2));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
 
         CalculatorParameter material = new CalculatorParameter("Material");
         CalculatorParameter dn = new CalculatorParameter("DN");
