@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class CalculatorParameter extends JPanel {
     public CalculatorParameter(String name) {
+//        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.setLayout(new FlowLayout());
 //        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         JLabel label = new JLabel(name);

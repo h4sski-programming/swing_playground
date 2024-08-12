@@ -18,6 +18,7 @@ public class CalculatorMain extends JPanel {
         this.add(calculatePanel);
 
         // Create and add output class
-        // TODO
+        CalculatorOutput calcOutput = new CalculatorOutput();
+        this.add(calcOutput);
     }
 }
