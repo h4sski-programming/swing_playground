@@ -26,3 +26,17 @@ Design pressure         | float            | -
 Corrosion allowance c0  | float            | -
 Thining allowance c2    | float            | -
 Joint coefficient z     | dropdown[int]    | -
+
+
+### Window design map:
+
+`PipeWallThicknessCalculator.java`
+
+Main window is `JFrame frame`.
+Order of the JPanels is:
+
+```mermaid
+A[frame] --> B[menu]
+B --> C[mainPanel]
+C --> D[footer]
+```
