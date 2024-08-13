@@ -36,7 +36,8 @@ Main window is `JFrame frame`.
 Order of the JPanels is:
 
 ```mermaid
-A[frame] --> B[menu]
-B --> C[mainPanel]
-C --> D[footer]
+graph TD;
+A[frame] --> B[menu];
+B --> C[mainPanel];
+C --> D[footer];
 ```
