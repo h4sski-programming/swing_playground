@@ -1,17 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 
+
+
 public class CalculatorOutput extends JPanel {
     public CalculatorOutput() {
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        GridLayout gridLayout = new GridLayout(0, 2);
+        gridLayout.setHgap(10);
+        this.setLayout(gridLayout);
 //        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JPanel leftColumn = new JPanel();
-        leftColumn.setLayout(new BoxLayout(leftColumn, BoxLayout.Y_AXIS));
-        JPanel rightColumn = new JPanel();
-        rightColumn.setLayout(new BoxLayout(rightColumn, BoxLayout.Y_AXIS));
-        JPanel spacer = new JPanel();
-        spacer.setMaximumSize(new Dimension(20, 10));
 
         DataBase dataBase = new DataBase();
 
@@ -28,18 +26,14 @@ public class CalculatorOutput extends JPanel {
 //        CalculatorParameter calculatedWallThickness = new CalculatorParameter("Calculated minimal wall thickness = ecalc = e + c0 + c1 + c2 [mm]");
 //        CalculatorParameter message = new CalculatorParameter("-");
 
-        leftColumn.add(new JLabel(od.getLabel()));
-        rightColumn.add(new JLabel(od.getValueStr()));
-        leftColumn.add(new JLabel(id.getLabel()));
-        rightColumn.add(new JLabel(String.format("%.1f", id.getValue())));
-        leftColumn.add(new JLabel(strengthCalcTemp.getLabel()));
-        rightColumn.add(new JLabel(String.format("%d", strengthCalcTemp.getValueInt())));
-        leftColumn.add(new JLabel(reducedStrengthCalcTemp.getLabel()));
-        rightColumn.add(new JLabel(reducedStrengthCalcTemp.getValueStr()));
-
-        this.add(leftColumn);
-        this.add(spacer);
-        this.add(rightColumn);
+        this.add(new LeftJLabel(od.getLabel()));
+        this.add(new JLabel(od.getValueStr()));
+        this.add(new LeftJLabel(id.getLabel()));
+        this.add(new JLabel(String.format("%.1f", id.getValue())));
+        this.add(new LeftJLabel(strengthCalcTemp.getLabel()));
+        this.add(new JLabel(String.format("%d", strengthCalcTemp.getValueInt())));
+        this.add(new LeftJLabel(reducedStrengthCalcTemp.getLabel()));
+        this.add(new JLabel(reducedStrengthCalcTemp.getValueStr()));
 
 
 
