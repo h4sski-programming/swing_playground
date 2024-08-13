@@ -35,12 +35,6 @@ public class CalculatorOutput extends JPanel {
         this.add(new LeftJLabel(reducedStrengthCalcTemp.getLabel()));
         this.add(new JLabel(reducedStrengthCalcTemp.getValueStr()));
 
-
-
-//        this.add(od);
-//        this.add(id);
-//        this.add(strengthCalcTemp);
-//        this.add(reducedStrengthCalcTemp);
 //        this.add(minRequiredThickness);
 //        this.add(allowanceC1);
 //        this.add(calculatedWallThickness);
