@@ -42,8 +42,8 @@ B --> C[mainPanel];
 C --> D[footer];
 C --> E[calcInput];
 E --> F[calculatePanel];
-F --> G(calculateBtn);
+F --> G[calculateBtn];
 F --> H[calcOutput];
-I<CalculatorParameter> --> E;
+I[CalculatorParameter] --> E;
 I --> H;
 ```
