@@ -84,12 +84,12 @@ public class CalculatorMain extends JPanel {
 
         double calculatedWallThickness;
         calculatedWallThickness = minRequiredThickness + (double)inputValues.get("corrosionAllowanceC0") +
-                (double)inputValues.get("thiningAllowanceC2");
+                allowanceC1 + (double)inputValues.get("thiningAllowanceC2");
         outputValues.put("calculatedWallThickness", calculatedWallThickness);
 
         String message;
         String messageValue;
-        String wallString = String.format("%.4f", wall);
+        String wallString = String.format("%.1f", wall);
         String calcWallString = String.format("%.4f", calculatedWallThickness);
         String wallRatioString = String.format("%.2f", wall/calculatedWallThickness * 100);
         messageValue = wallString + " / " + calcWallString + " = " + wallRatioString + "%";

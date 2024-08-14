@@ -5,62 +5,47 @@ import java.util.HashMap;
 
 public class CalculatorOutput extends JPanel {
 
-    private JLabel calculatedWallThickness = new JLabel("-");
-    private LeftJLabel message = new LeftJLabel("-");
-    private JLabel messageValue = new JLabel("-");
+    private final JLabel od = new JLabel("-");
+    private final JLabel id = new JLabel("-");
+    private final JLabel strengthCalcTemp = new JLabel("-");
+    private final JLabel reducedStrengthCalcTemp = new JLabel("-");
+    private final JLabel minRequiredThickness = new JLabel("-");
+    private final JLabel allowanceC1 = new JLabel("-");
+    private final JLabel calculatedWallThickness = new JLabel("-");
+    private final LeftJLabel message = new LeftJLabel("-");
+    private final JLabel messageValue = new JLabel("-");
 
     public CalculatorOutput() {
-        GridLayout gridLayout = new GridLayout(0, 2);
-        gridLayout.setHgap(10);
+        GridLayout gridLayout = new GridLayout(0, 2, 10, 5);
         setLayout(gridLayout);
 
-        DataBase dataBase = new DataBase();
-
-        // debug purpose values
-        String selectedMaterial = dataBase.materials[3];
-        int selectedDN = 50;
-        double selectedWall = dataBase.walls[12];
-
-        double odCalc = dataBase.od.get(selectedDN);
-        double idCalc = odCalc - (2*selectedWall);
-
-        CalculatorParameter od = new CalculatorParameter("OD [mm]", odCalc);
-        CalculatorParameter id = new CalculatorParameter("ID [mm]", idCalc);
-        CalculatorParameter strengthCalcTemp = new CalculatorParameter("Strength at calc temp [MPa]", dataBase.strengthAtTemp.get(selectedMaterial)[0]);
-        CalculatorParameter reducedStrengthCalcTemp = new CalculatorParameter("Reduced strength at calc temp [MPa]", 126);
-        CalculatorParameter minRequiredThickness = new CalculatorParameter("Minimum required wall thickness  [mm]");
-        CalculatorParameter allowanceC1 = new CalculatorParameter("Allowance [mm]");
-//        CalculatorParameter calculatedWallThickness = new CalculatorParameter("Calculated minimal wall thickness [mm]");
-//        CalculatorParameter message = new CalculatorParameter("-");
-
-        add(new LeftJLabel(od.getLabel()));
-        add(new JLabel(od.getValueStr()));
-        add(new LeftJLabel(id.getLabel()));
-        add(new JLabel(String.format("%.1f", id.getValue())));
-        add(new LeftJLabel(strengthCalcTemp.getLabel()));
-        add(new JLabel(String.format("%d", strengthCalcTemp.getValueInt())));
-        add(new LeftJLabel(reducedStrengthCalcTemp.getLabel()));
-        add(new JLabel(reducedStrengthCalcTemp.getValueStr()));
-        add(new LeftJLabel(minRequiredThickness.getLabel()));
-        add(new JLabel(minRequiredThickness.getValueStr()));
-        add(new LeftJLabel(allowanceC1.getLabel()));
-        add(new JLabel(allowanceC1.getValueStr()));
-
-
+        add(new LeftJLabel("OD [mm]"));
+        add(od);
+        add(new LeftJLabel("ID [mm]"));
+        add(id);
+        add(new LeftJLabel("Strength at calc temp [MPa]"));
+        add(strengthCalcTemp);
+        add(new LeftJLabel("Reduced strength at calc temp [MPa]"));
+        add(reducedStrengthCalcTemp);
+        add(new LeftJLabel("Minimum required wall thickness [mm]"));
+        add(minRequiredThickness);
+        add(new LeftJLabel("Allowance max(0.4, 12.5% en)[mm]"));
+        add(allowanceC1);
         add(new LeftJLabel("Calculated minimal wall thickness [mm]"));
         add(calculatedWallThickness);
 
         add(message);
         messageValue.setOpaque(true);
         add(messageValue);
-//        add(new JLabel(message.getValueStr()));
-
     }
     public void updateValues(HashMap<String, Object> outputValues) {
-
-        String s;
-        s = String.format("%.4f", (double)outputValues.get("calculatedWallThickness"));
-        calculatedWallThickness.setText(s);
+        od.setText(String.format("%.1f", (double)outputValues.get("od")));
+        id.setText(String.format("%.2f", (double)outputValues.get("id")));
+        strengthCalcTemp.setText(String.format("%.2f", (double)outputValues.get("strengthCalcTemp")));
+        reducedStrengthCalcTemp.setText(String.format("%.2f", (double)outputValues.get("reducedStrengthCalcTemp")));
+        minRequiredThickness.setText(String.format("%.4f", (double)outputValues.get("minRequiredThickness")));
+        allowanceC1.setText(String.format("%.2f", (double)outputValues.get("allowanceC1")));
+        calculatedWallThickness.setText(String.format("%.4f", (double)outputValues.get("calculatedWallThickness")));
 
         message.setText((String)outputValues.get("message"));
         messageValue.setText(((String)outputValues.get("messageValue")));
@@ -71,6 +56,5 @@ public class CalculatorOutput extends JPanel {
             message.setBackground(Settings.redColor);
             messageValue.setBackground(Settings.redColor);
         }
-
     }
 }

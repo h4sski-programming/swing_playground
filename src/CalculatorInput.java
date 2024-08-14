@@ -20,39 +20,30 @@ public class CalculatorInput extends JPanel {
 
 
     public CalculatorInput() {
-        GridLayout gridLayout = new GridLayout(0, 2);
-        gridLayout.setHgap(10);
+        GridLayout gridLayout = new GridLayout(0, 2, 10, 5);
         setLayout(gridLayout);
-
-        DataBase dataBase = new DataBase();
 
         add(new LeftJLabel("Material"));
         add(material);
-
         add(new LeftJLabel("DN"));
         add(dn);
-
         add(new LeftJLabel("Wall thickness [mm]"));
         add(wall);
-
         add(new LeftJLabel("Design temperature [°C]"));
         add(designTemperatureSpinner);
-
         add(new LeftJLabel("Design pressure [MPa]"));
         add(designPressureSpinner);
-
         add(new LeftJLabel("Corrosion allowance c0 [mm]"));
         add(corrosionAllowanceC0Spinner);
-
         add(new LeftJLabel("Thining allowance c2 [mm]"));
         add(thiningAllowanceC2Spinner);
-
         add(new LeftJLabel("Joint coefficient z [-]"));
         add(jointCoefficientZ);
     }
 
     public HashMap<String, Object> getValues() {
         HashMap<String, Object> values = new HashMap<String, Object>();
+
         values.put("material", material.getSelectedItem());
         values.put("dn", dn.getSelectedItem());
         values.put("wall", wall.getSelectedItem());
