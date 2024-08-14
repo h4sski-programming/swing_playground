@@ -27,6 +27,7 @@ public class PipeWallThicknessCalculator {
         footer.setHorizontalAlignment(SwingConstants.RIGHT);
         frame.add(footer, BorderLayout.SOUTH);
 
+//        frame.pack();
         frame.setVisible(true);
     }
 }
