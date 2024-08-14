@@ -5,6 +5,7 @@ public class DataBase {
     HashMap<Integer, Double> od = new HashMap<Integer, Double>();
     Integer[] dn = new Integer[]{10, 15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300, 350, 400, 450, 500};
 
+    // Based on EN 10216-2 Table 6
     Double[] walls = new Double[]{1.6, 1.8, 2.0, 2.3, 2.6, 2.9, 3.2, 3.6, 4.0, 4.5, 5.0, 5.6, 6.3, 7.1, 8.0, 8.8, 10., 11., 12.5, 14.2, 16., 17.5, 20., 22.2, 25., 28., 30., 32., 36., 40., 45., 50., 55., 60., 65., 70., 80., 90., 100.};
     String[] jointCoefficient = new String[]{
             "1.0 Seamless / destructive and non-destructive testing",
@@ -51,6 +52,7 @@ public class DataBase {
         String material;
         Integer[] listAtTemp;
 
+        // Values based on EN 10216-2 Table 5
         material = "P195GH 1.0348";
         listAtTemp = new Integer[]{175, 165, 150, 130, 113, 102, 94, 0, 0, 0, 0};
         combineMaterialAndStrengthAtTemp(material, listAtTemp);

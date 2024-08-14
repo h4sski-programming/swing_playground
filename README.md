@@ -44,8 +44,6 @@ C --> E[calcInput];
 E --> F[calculatePanel];
 F --> G[calculateBtn];
 F --> H[calcOutput];
-I[CalculatorParameter] --> E;
-I --> H;
 ```
 
 
