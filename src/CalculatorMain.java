@@ -8,6 +8,7 @@ public class CalculatorMain extends JPanel {
     protected DataBase dataBase = new DataBase();
     private CalculatorInput calcInput = new CalculatorInput();
     private CalculatorOutput calcOutput = new CalculatorOutput();
+    private CalculatorNotes calcNotes = new CalculatorNotes();
     private HashMap<String, Object> inputValues = new HashMap<String, Object>();
     private HashMap<String, Object> outputValues = new HashMap<String, Object>();
 
@@ -35,16 +36,23 @@ public class CalculatorMain extends JPanel {
 
         // Create and add output class
         add(calcOutput);
+        add(calcNotes);
     }
 
     private void calculate() {
+        remove(calcNotes);
+        calcNotes = new CalculatorNotes();
+        add(calcNotes);
+
         inputValues = calcInput.getValues();
-
         calculateValues();
-
         calcOutput.updateValues(outputValues);
+//        calcNotes.update();
 
         // Debug purpose Sys.out
+//        System.out.println(dataBase.strengthAtTempHM.get((String)inputValues.get("material")));
+//        System.out.println(dataBase.tensileStrengthRm.get((String)inputValues.get("material")));
+//        System.out.println(dataBase.creepStrength.get((String)inputValues.get("material")).get((String)inputValues.get("creepDuration")).get(430));
 //        System.out.println(inputValues.get("material"));
 //        System.out.println(inputValues.get("dn"));
 //        System.out.println(inputValues.get("wall"));
@@ -56,6 +64,7 @@ public class CalculatorMain extends JPanel {
     }
 
     private void calculateValues() {
+        String material = (String) inputValues.get("material");
         double od = dataBase.od.get(inputValues.get("dn"));
         outputValues.put("od", od);
 
@@ -63,19 +72,31 @@ public class CalculatorMain extends JPanel {
         double id = od - (2 * wall);
         outputValues.put("id", id);
 
-        double approximateStrength = approximateStrength((String) inputValues.get("material"), (int) inputValues.get("designTemperature"));
+        double approximateStrength = approximateStrength(material, (int) inputValues.get("designTemperature"));
         outputValues.put("strengthCalcTemp", approximateStrength);
 
-        double reducedStrengthCalcTemp = approximateStrength/1.5;
+        double tensileStrengthRm = dataBase.tensileStrengthRm.get(material);
+        double reducedStrengthCalcTemp = Math.min(approximateStrength/1.5, tensileStrengthRm/2.4);
         outputValues.put("reducedStrengthCalcTemp", reducedStrengthCalcTemp);
 
-        // e = (pc * Do) / (2* f * z + pc) minimum required wall thickness [mm]
         double designPressure = (double)inputValues.get("designPressure");
         double jointCoefficientZ;
         jointCoefficientZ = dataBase.jointCoefficienthm.get((String)inputValues.get("jointCoefficientZ"));
         double minRequiredThickness;
-        minRequiredThickness = designPressure * od /
-                (2* reducedStrengthCalcTemp * jointCoefficientZ + designPressure);
+
+        if (od/id <= 1.7){
+            // e = (pc * Do) / (2* f * z + pc) minimum required wall thickness [mm]
+//            outputValues.put("noteL", "-"); // default value
+            minRequiredThickness = designPressure * od /
+                    (2* reducedStrengthCalcTemp * jointCoefficientZ + designPressure);
+        } else {
+            // e = Do/2 (1- sqrt((f z - pc) / (f z + pc)) minimum required wall thickness [mm]
+            outputValues.put("noteL", "Do / Di > 1.7");
+            calcNotes.addNote("Do / Di > 1.7");
+            minRequiredThickness = od/2* (1 -
+                    Math.sqrt( (reducedStrengthCalcTemp * jointCoefficientZ - designPressure) /
+                            (reducedStrengthCalcTemp * jointCoefficientZ + designPressure) ));
+        }
         outputValues.put("minRequiredThickness", minRequiredThickness);
 
         double allowanceC1;

@@ -14,6 +14,8 @@ public class CalculatorOutput extends JPanel {
     private final JLabel calculatedWallThickness = new JLabel("-");
     private final LeftJLabel message = new LeftJLabel("-");
     private final JLabel messageValue = new JLabel("-");
+    private final LeftJLabel noteL = new LeftJLabel("-");
+    private final JLabel noteR = new JLabel("-");
 
     public CalculatorOutput() {
         GridLayout gridLayout = new GridLayout(0, 2, 10, 5);
@@ -37,6 +39,12 @@ public class CalculatorOutput extends JPanel {
         add(message);
         messageValue.setOpaque(true);
         add(messageValue);
+
+//        add(noteL);
+//        add(noteR);
+//        JPanel noteRpanel = new JPanel();
+//        BoxLayout boxLayout = new BoxLayout(noteRpanel, BoxLayout.Y_AXIS);
+//        noteRpanel.setLayout(boxLayout);
     }
     public void updateValues(HashMap<String, Object> outputValues) {
         od.setText(String.format("%.1f", (double)outputValues.get("od")));
@@ -56,5 +64,8 @@ public class CalculatorOutput extends JPanel {
             message.setBackground(Settings.redColor);
             messageValue.setBackground(Settings.redColor);
         }
+
+        noteL.setText((String) outputValues.get("noteL"));
+        noteR.setText((String) outputValues.get("noteR"));
     }
 }
