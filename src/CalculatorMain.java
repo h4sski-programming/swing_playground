@@ -16,6 +16,9 @@ public class CalculatorMain extends JPanel {
         // Setup view of this JPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        // creating top panel, only for style
+        add(new TopPanel());
+
         // Create and add input class
         add(calcInput);
 
@@ -35,14 +38,14 @@ public class CalculatorMain extends JPanel {
         add(calculatePanel);
 
         // Create and add output class
-        add(calcOutput);
         add(calcNotes);
+        add(calcOutput);
     }
 
     private void calculate() {
-        remove(calcNotes);
-        calcNotes = new CalculatorNotes();
-        add(calcNotes);
+//        remove(calcNotes);
+//        calcNotes = new CalculatorNotes();
+//        add(calcNotes);
 
         inputValues = calcInput.getValues();
         calculateValues();
@@ -91,8 +94,8 @@ public class CalculatorMain extends JPanel {
                     (2* reducedStrengthCalcTemp * jointCoefficientZ + designPressure);
         } else {
             // e = Do/2 (1- sqrt((f z - pc) / (f z + pc)) minimum required wall thickness [mm]
-            outputValues.put("noteL", "Do / Di > 1.7");
-            calcNotes.addNote("Do / Di > 1.7");
+//            outputValues.put("noteL", "Do / Di > 1.7");
+            calcNotes.addNote("Thick wall, calculating with condition: Do / Di > 1.7");
             minRequiredThickness = od/2* (1 -
                     Math.sqrt( (reducedStrengthCalcTemp * jointCoefficientZ - designPressure) /
                             (reducedStrengthCalcTemp * jointCoefficientZ + designPressure) ));
