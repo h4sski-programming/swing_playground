@@ -25,7 +25,7 @@ public class CalculatorOutput extends JPanel {
         add(od);
         add(new LeftJLabel("ID [mm]"));
         add(id);
-        add(new LeftJLabel("Strength at calc temp [MPa]"));
+        add(new LeftJLabel("Proof strength at calc temp [MPa]"));
         add(strengthCalcTemp);
         add(new LeftJLabel("Reduced strength at calc temp [MPa]"));
         add(reducedStrengthCalcTemp);

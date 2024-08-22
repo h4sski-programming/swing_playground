@@ -8,7 +8,7 @@ public class PipeWallThicknessCalculator {
 
         JFrame frame = new JFrame();
         frame.setTitle("First JFrame");
-        frame.setSize(800, 600);
+        frame.setSize(800, 700);
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -22,12 +22,26 @@ public class PipeWallThicknessCalculator {
         frame.add(mainPanel, BorderLayout.CENTER);
 
         // Footer
-        JLabel footer = new JLabel("Coded by h4sski  ");
-        footer.setFont(new Font("Consolas", Font.PLAIN, 10));
-        footer.setHorizontalAlignment(SwingConstants.RIGHT);
-        frame.add(footer, BorderLayout.SOUTH);
+//        JLabel footer = new JLabel("Coded by h4sski  ");
+//        footer.setFont(new Font("Consolas", Font.PLAIN, 10));
+//        footer.setHorizontalAlignment(SwingConstants.RIGHT);
+        frame.add(getFooter(), BorderLayout.SOUTH);
 
 //        frame.pack();
         frame.setVisible(true);
+    }
+
+    private JPanel getFooter() {
+        JPanel footerPanel = new JPanel();
+        BoxLayout boxLayout = new BoxLayout(footerPanel, BoxLayout.X_AXIS);
+        footerPanel.setLayout(boxLayout);
+        footerPanel.setBackground(Settings.grayColor);
+
+        JLabel footer = new JLabel("Coded by h4sski  ");
+        footer.setFont(new Font("Consolas", Font.PLAIN, 10));
+        footer.setForeground(Settings.whiteFontColor);
+        footerPanel.add(footer);
+
+        return footerPanel;
     }
 }

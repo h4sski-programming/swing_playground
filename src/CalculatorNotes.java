@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class CalculatorNotes extends JPanel {
 //    private Set<String> notes = new HashSet<String>();
-    List<JLabel> notesList = new ArrayList<>();
+//    List<JLabel> notesList = new ArrayList<>();
     public CalculatorNotes() {
         BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         setLayout(boxLayout);
@@ -25,24 +25,27 @@ public class CalculatorNotes extends JPanel {
 //        this = new CalculatorNotes();
 //    }
 
-    public void addNote(String note) {
-        JLabel noteLabel = new JLabel(note);
-        if (notesList.size() >= 8) {
-            return;
-        }
-        notesList.add(noteLabel);
-        add(noteLabel);
-
-//        noteLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//        noteLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-//        noteLabel.setMinimumSize(new Dimension(500, 0));
-//        noteLabel.setSize(500, 0);
-//        add(noteLabel);
-    }
-
-//    public void update() {
-//        for (String note : notes) {
-//            add(new JLabel(note));
+//    public void addNote(String note) {
+//        JLabel noteLabel = new JLabel(note);
+//        if (notesList.size() >= 8) {
+//            return;
 //        }
+//        notesList.add(noteLabel);
+//        add(noteLabel);
+//
+////        noteLabel.setHorizontalAlignment(SwingConstants.CENTER);
+////        noteLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+////        noteLabel.setMinimumSize(new Dimension(500, 0));
+////        noteLabel.setSize(500, 0);
+////        add(noteLabel);
 //    }
+
+    public void updateNotes(List<String> notesList) {
+        if (notesList == null) return;
+        removeAll();
+        add(new JLabel("Notes"));
+        for (String note : notesList) {
+            add(new JLabel(note));
+        }
+    }
 }
