@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class CalculatorInput extends JPanel {
 
@@ -19,7 +17,6 @@ public class CalculatorInput extends JPanel {
     protected SpinnerModel spinnerModelThiningAllowanceC2Spinner = new SpinnerNumberModel(0., 0., 100., 0.1);
     protected JSpinner thiningAllowanceC2Spinner = new JSpinner(spinnerModelThiningAllowanceC2Spinner);
     protected JComboBox<String> jointCoefficientZ = new JComboBox<String>(dataBase.jointCoefficient);
-//    protected List<String> creepDurationArrayList = new ArrayList<>(dataBase.creepDuration.keySet());
     protected JComboBox<String> creepDuration = new JComboBox<String>(dataBase.creepDuration);
 
 

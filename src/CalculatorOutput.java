@@ -12,12 +12,12 @@ public class CalculatorOutput extends JPanel {
     private final JLabel minRequiredThickness = new JLabel("-");
     private final JLabel creepStrengthTemp = new JLabel("-");
     private final JLabel reducedCreepStrengthTemp = new JLabel("-");
+    private final JLabel reducedStrength = new JLabel("-");
     private final JLabel allowanceC1 = new JLabel("-");
     private final JLabel calculatedWallThickness = new JLabel("-");
     private final LeftJLabel message = new LeftJLabel("-");
     private final JLabel messageValue = new JLabel("-");
-    private final LeftJLabel noteL = new LeftJLabel("-");
-    private final JLabel noteR = new JLabel("-");
+
 
     public CalculatorOutput() {
         GridLayout gridLayout = new GridLayout(0, 2, 10, 5);
@@ -35,23 +35,25 @@ public class CalculatorOutput extends JPanel {
         add(creepStrengthTemp);
         add(new LeftJLabel("Reduced creep strength at calc temp [MPa]"));
         add(reducedCreepStrengthTemp);
+        add(new LeftJLabel("Final reduced strength at calc temp [MPa]"));
+        reducedStrength.setBackground(Settings.orangeColor);
+        reducedStrength.setOpaque(true);
+        add(reducedStrength);
         add(new LeftJLabel("Minimum required wall thickness [mm]"));
         add(minRequiredThickness);
         add(new LeftJLabel("Allowance max(0.4, 12.5% en)[mm]"));
         add(allowanceC1);
         add(new LeftJLabel("Calculated minimal wall thickness [mm]"));
+        calculatedWallThickness.setBackground(Settings.orangeColor);
+        calculatedWallThickness.setOpaque(true);
         add(calculatedWallThickness);
 
         add(message);
         messageValue.setOpaque(true);
         add(messageValue);
-
-//        add(noteL);
-//        add(noteR);
-//        JPanel noteRpanel = new JPanel();
-//        BoxLayout boxLayout = new BoxLayout(noteRpanel, BoxLayout.Y_AXIS);
-//        noteRpanel.setLayout(boxLayout);
     }
+
+
     public void updateValues(HashMap<String, Object> outputValues) {
         od.setText(String.format("%.1f", (double)outputValues.get("od")));
         id.setText(String.format("%.2f", (double)outputValues.get("id")));
@@ -59,6 +61,7 @@ public class CalculatorOutput extends JPanel {
         reducedStrengthCalcTemp.setText(String.format("%.2f", (double)outputValues.get("reducedStrengthCalcTemp")));
         creepStrengthTemp.setText(String.format("%.2f", (double)outputValues.get("creepStrengthTemp")));
         reducedCreepStrengthTemp.setText(String.format("%.2f", (double)outputValues.get("reducedCreepStrengthTemp")));
+        reducedStrength.setText(String.format("%.2f", (double)outputValues.get("reducedStrength")));
         minRequiredThickness.setText(String.format("%.4f", (double)outputValues.get("minRequiredThickness")));
         allowanceC1.setText(String.format("%.2f", (double)outputValues.get("allowanceC1")));
         calculatedWallThickness.setText(String.format("%.4f", (double)outputValues.get("calculatedWallThickness")));
@@ -72,8 +75,5 @@ public class CalculatorOutput extends JPanel {
             message.setBackground(Settings.redColor);
             messageValue.setBackground(Settings.redColor);
         }
-
-        noteL.setText((String) outputValues.get("noteL"));
-        noteR.setText((String) outputValues.get("noteR"));
     }
 }
