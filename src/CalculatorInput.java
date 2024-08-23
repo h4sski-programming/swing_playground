@@ -24,7 +24,7 @@ public class CalculatorInput extends JPanel {
 
 
     public CalculatorInput() {
-        GridLayout gridLayout = new GridLayout(0, 2, 10, 5);
+        GridLayout gridLayout = new GridLayout(0, 2, 10, 3);
         setLayout(gridLayout);
 
         add(new LeftJLabel("Material"));

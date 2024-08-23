@@ -84,15 +84,20 @@ public class CalculatorMain extends JPanel {
             notesList.add("ID is less then 0, check input values!");
         }
 
-        double approximateStrength = approximateStrength(material, (int) inputValues.get("designTemperature"));
-        outputValues.put("strengthCalcTemp", approximateStrength);
-
+        HashMap<Integer, Integer> strengthAtTempHM = dataBase.strengthAtTempHM.get(material);
+        double approxStrength = approximateStrength(strengthAtTempHM, (int) inputValues.get("designTemperature"));
+        outputValues.put("strengthCalcTemp", approxStrength);
         double tensileStrengthRm = dataBase.tensileStrengthRm.get(material);
-        double reducedStrengthCalcTemp = Math.min(approximateStrength/1.5, tensileStrengthRm/2.4);
+        double reducedStrengthCalcTemp = Math.min(approxStrength/1.5, tensileStrengthRm/2.4);
         outputValues.put("reducedStrengthCalcTemp", reducedStrengthCalcTemp);
 
         // Creep calculations
-        double creepStrength = getCreepStrength(material, designTemperature);
+        double creepStrengthTemp = getCreepStrength(material, designTemperature);
+        outputValues.put("creepStrengthTemp", creepStrengthTemp);
+        double reducedCreepStrengthTemp = creepStrengthTemp/1.5;
+        outputValues.put("reducedCreepStrengthTemp", reducedCreepStrengthTemp);
+
+
 
         double designPressure = (double)inputValues.get("designPressure");
         double jointCoefficientZ;
@@ -148,44 +153,61 @@ public class CalculatorMain extends JPanel {
 //        System.out.println("\n" + dataBase.strengthAtTempHM);
     }
 
-    private double approximateStrength(String material, int calcTemp) {
-        HashMap<Integer, Integer> materialStrengthAtTemp = dataBase.strengthAtTempHM.get(material);
-        int lowerTemp = 0;
-        int higherTemp = 1;
-        for (int i=0; i<dataBase.temps.length; i++) {
-            if (dataBase.temps[i] > calcTemp) {
-                higherTemp = dataBase.temps[i];
-                break;
-            }
-            lowerTemp = dataBase.temps[i];
+
+    private double approximateStrength(HashMap<Integer, Integer> materialStrengthAtTemp, Integer calcTemp) {
+        int lowerTemp = Collections.min(materialStrengthAtTemp.keySet());
+        int higherTemp = Collections.max(materialStrengthAtTemp.keySet());
+
+        for (Integer temp : materialStrengthAtTemp.keySet()) {
+            if (temp >= calcTemp && temp < higherTemp) higherTemp = temp;
+            if (temp < calcTemp && temp > lowerTemp) lowerTemp = temp;
         }
+
+        if (lowerTemp == higherTemp) return materialStrengthAtTemp.get(lowerTemp);
+
         int lowerTempStrength = materialStrengthAtTemp.get(lowerTemp);
         int higherTempStrength = materialStrengthAtTemp.get(higherTemp);
 
-        // Check if calcTemp is out of table with values for this material
-        if (higherTempStrength==0 && calcTemp!=lowerTemp) {
+        // Check if higherTemp have NOT positive value then return 0.
+        if ( !(higherTempStrength > 0)) {
             return 0.;
         }
 
         double tempRatio = (double) (calcTemp - lowerTemp) / (higherTemp - lowerTemp);
         // debug purpose
 //        double answer = lowerTempStrength - tempRatio * (lowerTempStrength-higherTempStrength);
-//        System.out.println(answer);
+//        System.out.println(lowerTemp);
         return lowerTempStrength - tempRatio * (lowerTempStrength-higherTempStrength);
     }
 
     private double getCreepStrength(String material, Integer designTemperature) {
-        String creepDuration = (String) inputValues.get("creepDuration");
-        Set<Integer> creepTemps = dataBase.creepStrength.get(material).get(creepDuration).keySet();
-        Integer minCreepTemp = Collections.min(creepTemps);
-        Integer maxCreepTemp = Collections.max(creepTemps);
-        if (minCreepTemp <= designTemperature && designTemperature <= maxCreepTemp) {
 
-            System.out.println(creepTemps);
-            System.out.println(minCreepTemp);
-            System.out.println(maxCreepTemp);
+        if (!dataBase.creepStrength.containsKey(material)) {
+            notesList.add("Material " + material + " does not have creep values");
+            return 0.;
         }
 
-        return 0.;
+        String creepDuration = (String) inputValues.get("creepDuration");
+        HashMap<Integer, Integer> creepHashMap = dataBase.creepStrength.get(material).get(creepDuration);
+        Set<Integer> creepTemps = creepHashMap.keySet();
+        Integer minCreepTemp = Collections.min(creepTemps);
+        Integer maxCreepTemp = getMaxKeyWithPositiveValue(creepHashMap);
+        if (minCreepTemp > designTemperature || designTemperature > maxCreepTemp) {
+            notesList.add("Material " + material + " have creep temp range between " + minCreepTemp + " ~ " + maxCreepTemp);
+            return 0.;
+        }
+
+//        double answer;
+//        answer = approximateStrength(creepHashMap, designTemperature);
+//        System.out.println(answer);
+        return approximateStrength(creepHashMap, designTemperature);
+    }
+
+    private Integer getMaxKeyWithPositiveValue (HashMap<Integer, Integer> creepHashMap) {
+        Integer answer = 0;
+        for (Integer temp : creepHashMap.keySet()) {
+            if (temp >= answer && creepHashMap.get(temp) > 0) answer = temp;
+        }
+        return answer;
     }
 }

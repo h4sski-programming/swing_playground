@@ -10,6 +10,8 @@ public class CalculatorOutput extends JPanel {
     private final JLabel strengthCalcTemp = new JLabel("-");
     private final JLabel reducedStrengthCalcTemp = new JLabel("-");
     private final JLabel minRequiredThickness = new JLabel("-");
+    private final JLabel creepStrengthTemp = new JLabel("-");
+    private final JLabel reducedCreepStrengthTemp = new JLabel("-");
     private final JLabel allowanceC1 = new JLabel("-");
     private final JLabel calculatedWallThickness = new JLabel("-");
     private final LeftJLabel message = new LeftJLabel("-");
@@ -29,6 +31,10 @@ public class CalculatorOutput extends JPanel {
         add(strengthCalcTemp);
         add(new LeftJLabel("Reduced strength at calc temp [MPa]"));
         add(reducedStrengthCalcTemp);
+        add(new LeftJLabel("Proof creep strength at calc temp [MPa]"));
+        add(creepStrengthTemp);
+        add(new LeftJLabel("Reduced creep strength at calc temp [MPa]"));
+        add(reducedCreepStrengthTemp);
         add(new LeftJLabel("Minimum required wall thickness [mm]"));
         add(minRequiredThickness);
         add(new LeftJLabel("Allowance max(0.4, 12.5% en)[mm]"));
@@ -51,6 +57,8 @@ public class CalculatorOutput extends JPanel {
         id.setText(String.format("%.2f", (double)outputValues.get("id")));
         strengthCalcTemp.setText(String.format("%.2f", (double)outputValues.get("strengthCalcTemp")));
         reducedStrengthCalcTemp.setText(String.format("%.2f", (double)outputValues.get("reducedStrengthCalcTemp")));
+        creepStrengthTemp.setText(String.format("%.2f", (double)outputValues.get("creepStrengthTemp")));
+        reducedCreepStrengthTemp.setText(String.format("%.2f", (double)outputValues.get("reducedCreepStrengthTemp")));
         minRequiredThickness.setText(String.format("%.4f", (double)outputValues.get("minRequiredThickness")));
         allowanceC1.setText(String.format("%.2f", (double)outputValues.get("allowanceC1")));
         calculatedWallThickness.setText(String.format("%.4f", (double)outputValues.get("calculatedWallThickness")));

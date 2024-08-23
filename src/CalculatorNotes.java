@@ -47,5 +47,7 @@ public class CalculatorNotes extends JPanel {
         for (String note : notesList) {
             add(new JLabel(note));
         }
+        revalidate();
+        repaint();
     }
 }
